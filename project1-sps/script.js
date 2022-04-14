@@ -9,7 +9,6 @@ var winningTimes = 0;
 var losingTimes = 0;
 var gamesPlayed = 0;
 var userName = "";
-var myOutputValue = "";
 var continueGameMessage = `Type "scissors", "paper" or "stone" (without quotation marks) to continue! <br><br>Or, type "reversed scissors", "reversed paper" or "reversed stone" to continue with the reverse game!`;
 
 //Start of normal game function
