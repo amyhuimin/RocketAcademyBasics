@@ -1,154 +1,81 @@
-//Create functions for game modes
-//Ask for player's name
-//Greet player. Ask player to choose game mode
-//Ask player to input choice
-//Computer to choose
-//Compare results and display results according to game mode.
-var currentGameMode = "ask for username";
-var winningTimes = 0;
-var losingTimes = 0;
-var gamesPlayed = 0;
-var userName = "";
-var myOutputValue = "";
-//var winningPercentage = (winningTimes / gamesPlayed) * 100; WHY IS IT DISPLAYING NAN
-//Start of normal game function
-var playNormalGame = function (userName, guess) {
-  if (
-    guess != "scissors" ||
-    guess != "paper" ||
-    guess != "stone" ||
-    guess != "reversed scissors" ||
-    guess != "reversed paper" ||
-    guess != "reversed stone"
-  ) {
-    var myOutputValue = "This is not a valid choice.";
-  }
-  //start of reversed game function
-  var reversed = function () {
-    var compChoice = Math.ceil(Math.random() * 3);
-    if (compChoice == 1) {
-      compChoice = "reversed scissors";
-    }
-    if (compChoice == 2) {
-      compChoice = "reversed paper";
-    }
-    if (compChoice == 3) {
-      compChoice = "reversed stone";
-    }
-    //compare player's guess to computer's guess and show results
-    if (guess == compChoice) {
-      console.log("guess is compchoice");
-      console.log(compChoice);
-      console.log(guess);
-      message = `You chose ${guess}. <br>The computer chose ${compChoice}. <br>It's a draw. <br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
-    } else if (guess == "reversed scissors") {
-      console.log(compChoice);
-      console.log(guess);
-      if (compChoice == "reversed stone") {
-        winningTimes += 1;
-        message = `You chose ${guess}. <br>The computer chose ${compChoice}. <br>You win! <br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
-      } else if (compChoice == "reversed paper") {
-        losingTimes += 1;
-        message = `You chose ${guess}??. <br>The computer chose ${compChoice}. <br>You lose. <br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
-      }
-    } else if (guess == "reversed paper") {
-      console.log(compChoice);
-      console.log(guess);
-      if (compChoice == "reversed stone") {
-        losingTimes += 1;
-        message = `You chose ${guess}??. <br>The computer chose ${compChoice}. <br>You lose. <br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
-      } else if (compChoice == "reversed scissors") {
-        winningTimes += 1;
-        message = `You chose ${guess}. <br>The computer chose ${compChoice}. <br>You win! <br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
-      }
-    } else if (guess == "reversed stone") {
-      console.log(compChoice);
-      console.log(guess);
-      if (compChoice == "reversed scissors") {
-        losingTimes += 1;
-        message = `You chose ${guess}. <br>The computer chose ${compChoice}. <br>You lose. <br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
-      } else if (compChoice == "reversed paper") {
-        winningTimes += 1;
-        message = `You chose ${guess}. <br>The computer chose ${compChoice}. <br>You win! <br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
-      }
-    }
-  };
-  //end of reversed function
-  if (guess.includes("reversed")) {
-    console.log("do something special because text contains reversed");
-    reversed();
-  }
+var rollDice = function () {
+  // produce a decimal between 0 and 6
+  var randomDecimal = Math.random() * 6;
+  // remove the decimal
+  var randomInteger = Math.floor(randomDecimal);
+  // add 1 to get a number between 1 and 6 inclusive
+  var diceNumber = randomInteger + 1;
+  return diceNumber;
+};
 
-  gamesPlayed += 1;
-  //let computer choose randomly
-  var compChoice = Math.ceil(Math.random() * 3);
-  if (compChoice == 1) {
-    compChoice = "scissors";
+var gameMode = "start";
+var currentPlayer = "Player 1";
+var diceOne = 0;
+var diceTwo = 0;
+var finalNumber = 0;
+var outputMessage = "";
+var playerOneScore = 0;
+var playerTwoScore = 0;
+//Must make sure to have global variables first so that the function can store the variables!
+
+var chooseOrder = function (input) {
+  if (Number(input) == 1) {
+    console.log("input is 1");
+    finalNumber = diceOne + diceTwo;
+    outputMessage = `You chose 1. Your number is ${finalNumber}.`;
+  } else if (Number(input) == 2) {
+    console.log("input is 2");
+    finalNumber = diceTwo + diceOne;
+    outputMessage = `You chose 2. Your number is ${finalNumber}.`;
+  } else if (input != 1 || input != 2) {
+    outputMessage = `Please enter 1 or 2.`;
   }
-  if (compChoice == 2) {
-    compChoice = "paper";
-  }
-  if (compChoice == 3) {
-    compChoice = "stone";
-  }
-  //compare player's guess to computer's guess and show results
-  if (guess == compChoice) {
-    console.log("guess is " + compChoice);
-    console.log(compChoice);
-    console.log(guess);
-    var message = `You chose ${guess}. <br>The computer chose ${compChoice}. <br>It's a draw.<br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
-  } else if (guess == "scissors") {
-    console.log(compChoice);
-    console.log(guess);
-    if (compChoice == "stone") {
-      losingTimes += 1;
-      message = `You chose ${guess}. <br>The computer chose ${compChoice}. <br>You lose.<br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
-    } else if (compChoice == "paper") {
-      winningTimes += 1;
-      message = `You chose ${guess}. <br>The computer chose ${compChoice}. <br>You win!<br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
-    }
-  } else if (guess == "paper") {
-    console.log(compChoice);
-    console.log(guess);
-    if (compChoice == "stone") {
-      winningTimes += 1;
-      message = `You chose ${guess}:spiral_note_pad:. <br>The computer chose ${compChoice}. <br>You win!<br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
-    } else if (compChoice == "scissors") {
-      losingTimes += 1;
-      message = `You chose ${guess}:spiral_note_pad:. <br>The computer chose ${compChoice}. <br>You lose.<br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
-    }
-  } else if (guess == "stone") {
-    console.log(compChoice);
-    console.log(guess);
-    if (compChoice == "scissors") {
-      winningTimes += 1;
-      message = `You chose ${guess}. <br>The computer chose ${compChoice}. <br>You win!<br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
-    } else if (compChoice == "paper") {
-      losingTimes += 1;
-      message = `You chose ${guess}. <br>The computer chose ${compChoice}. <br>You lose. <br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
-    }
-  }
-  return message;
 };
-//End of normal game function
-//Function to ask for username
-var askName = function (input) {
-  var askNameMessage = "Hi! What's your name?";
-  return askNameMessage;
+
+var rollTwoDice = function () {
+  diceOne = String(rollDice());
+  diceTwo = String(rollDice());
+  console.log(diceOne + diceTwo);
+  console.log(gameMode);
+  gameMode = "order";
+  outputMessage = `🎲 WELCOME, ${currentPlayer} 🎲
+  <br>You rolled ${diceOne} for dice one and ${diceTwo} for dice two.
+  <br>Choose the order of the dice by entering "1" or "2".`;
 };
-//END function to ask username.
+
 var main = function (input) {
-  var myOutputValue = "";
-  if (currentGameMode == "ask for username") {
-    askName();
-    // set the name
-    userName = input;
-    // now that we have the name, switch the mode
-    currentGameMode = "play game";
-    myOutputValue = `Hello ${userName}! <br>Please type "scissors", "paper" or "stone" (without quotation marks) to start! <br><br>Or, type "reversed scissors", "reversed paper" or "reversed stone" to play the reverse game!`;
-  } else if (currentGameMode == "play game") {
-    // refactored function that can be reused anywhere
-    myOutputValue = playNormalGame(userName, input);
+  if (gameMode == "start") {
+    rollTwoDice();
+    gameMode = "order";
+    return outputMessage;
   }
-  return myOutputValue;
+  if (gameMode == "order") {
+    chooseOrder(input);
+    gameMode = "started2";
+    return `${currentPlayer}, you chose ${input}. Your final number is ${finalNumber}.`;
+  }
+  if (gameMode == "started2") {
+    currentPlayer = "Player 2";
+    console.log(gameMode);
+    console.log(currentPlayer);
+    rollTwoDice();
+    gameMode = "order";
+    return outputMessage;
+  }
+  if (gameMode == "order") {
+    chooseOrder(input);
+    return `${currentPlayer}, you chose ${input}. Your final number is ${finalNumber}.`;
+  }
 };
+
+//if (currentPlayer == "Player 1") {
+//currentPlayer = "Player 2";
+//} else if (currentPlayer == "Player 2") {
+//currentPlayer = "Player 1";
+//}
+//When I dont put return finalNumber outside chooseOrder function, nothing gets returned!
+
+//There are 2 players and players take turns.
+//When a player clicks Submit, the game rolls 2 dice and shows the dice rolls, for example 3 and 6.
+//The player picks the order of the dice they want. For example, if they wanted the number 63, they would specify that the 2nd dice goes first. You can choose how the player specifies dice order.
+//After both players have rolled and chosen dice order, the player with the higher combined number wins.
