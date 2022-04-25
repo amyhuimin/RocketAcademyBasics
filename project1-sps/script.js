@@ -9,7 +9,6 @@ var winningTimes = 0;
 var losingTimes = 0;
 var gamesPlayed = 0;
 var userName = "";
-var myOutputValue = "";
 var continueGameMessage = `Type "scissors", "paper" or "stone" (without quotation marks) to continue! <br><br>Or, type "reversed scissors", "reversed paper" or "reversed stone" to continue with the reverse game!`;
 
 //Start of normal game function
@@ -42,36 +41,36 @@ var playNormalGame = function (userName, guess) {
     if (guess == compChoice) {
       console.log(winningPercentage);
       console.log(gameStats);
-      message = `You chose ${guess}. <br>The computer chose ${compChoice}. <br>It's a draw. <br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
+      message = `${finalChoices} <br>It's a draw.<br>${gameStats}`;
     } else if (guess == "reversed scissors") {
       console.log(winningPercentage);
       console.log(gameStats);
       if (compChoice == "reversed stone") {
         winningTimes += 1;
-        message = `You chose ${guess}. <br>The computer chose ${compChoice}. <br>You win! <br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
+        message = `${finalChoices} <br>You win!<br>${gameStats}`;
       } else if (compChoice == "reversed paper") {
         losingTimes += 1;
-        message = `You chose ${guess}. <br>The computer chose ${compChoice}. <br>You lose. <br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
+        message = `${finalChoices} <br>You lose.<br>${gameStats}`;
       }
     } else if (guess == "reversed paper") {
       console.log(winningPercentage);
       console.log(gameStats);
       if (compChoice == "reversed stone") {
         losingTimes += 1;
-        message = `You chose ${guess}??. <br>The computer chose ${compChoice}. <br>You lose. <br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
+        message = `${finalChoices} <br>You lose.<br>${gameStats}`;
       } else if (compChoice == "reversed scissors") {
         winningTimes += 1;
-        message = `You chose ${guess}. <br>The computer chose ${compChoice}. <br>You win! <br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
+        message = `${finalChoices} <br>You win!<br>${gameStats}`;
       }
     } else if (guess == "reversed stone") {
       console.log(winningPercentage);
       console.log(gameStats);
       if (compChoice == "reversed scissors") {
         losingTimes += 1;
-        message = `You chose ${guess}. <br>The computer chose ${compChoice}. <br>You lose. <br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
+        message = `${finalChoices} <br>You lose.<br>${gameStats}`;
       } else if (compChoice == "reversed paper") {
         winningTimes += 1;
-        message = `You chose ${guess}. <br>The computer chose ${compChoice}. <br>You win! <br>You have played ${gamesPlayed} times, and you have won ${winningTimes} times and lost ${losingTimes} times.`;
+        message = `${finalChoices} <br>You win!<br>${gameStats}`;
       }
     }
   };
@@ -135,16 +134,10 @@ var playNormalGame = function (userName, guess) {
   return message;
 };
 //End of normal game function
-//Function to ask for username
-var askName = function (input) {
-  var askNameMessage = "Hi! What's your name?";
-  return askNameMessage;
-};
-//END function to ask username.
+
 var main = function (input) {
   var myOutputValue = "";
   if (currentGameMode == "ask for username") {
-    askName();
     // set the name
     userName = input;
     // now that we have the name, switch the mode

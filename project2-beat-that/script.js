@@ -8,33 +8,85 @@ var rollDice = function () {
   return diceNumber;
 };
 
-var main = function (input) {
-  if (input != "") {
-    var gameStart = false;
-    var message = "Please click on the 'Submit' button to start the game.";
+var gameMode = "start1";
+var currentPlayer = "Player 1";
+var diceOne = 0;
+var diceTwo = 0;
+var finalNumber = 0;
+var outputMessage = "";
+var playerOnePoints = 0;
+var playerTwoPoints = 0;
+//Must make sure to have global variables first so that the function can store the variables!
+
+var chooseOrder = function (input) {
+  if (Number(input) == 1) {
+    console.log("input is 1");
+    finalNumber = diceOne + diceTwo;
+    outputMessage = `${currentPlayer}, you chose ${input}. Your final number is ${finalNumber}.`;
+  } else if (Number(input) == 2) {
+    console.log("input is 2");
+    finalNumber = diceTwo + diceOne;
+    outputMessage = `${currentPlayer}, you chose ${input}. Your final number is ${finalNumber}.`;
+  } else if (input != 1 || input != 2) {
+    outputMessage = `Please enter 1 or 2.`;
   }
-  while (input == "") {
-    gameStart = true;
-    if (gameStart == true) {
-      var diceOne = rollDice();
-      console.log(diceOne);
-      var diceTwo = rollDice();
-      console.log(diceTwo);
-      var chooseDiceOrder = function (oneOrTwo) {
-        if (oneOrTwo == 1) {
-          var finalNumber = Number(diceOne + diceTwo);
-          console.log(finalNumber);
-        }
-      };
-    }
-    var message = `🎲 WELCOME, PLAYER 1 🎲
-    <br>You rolled ${diceOne} for dice one and ${diceTwo} for dice two.
-    <br>Choose the order of the dice by entering "1" or "2".`;
-  }
-  return message;
 };
 
-//There are 2 players and players take turns.
-//When a player clicks Submit, the game rolls 2 dice and shows the dice rolls, for example 3 and 6.
-//The player picks the order of the dice they want. For example, if they wanted the number 63, they would specify that the 2nd dice goes first. You can choose how the player specifies dice order.
-//After both players have rolled and chosen dice order, the player with the higher combined number wins.
+var rollTwoDice = function () {
+  diceOne = String(rollDice());
+  diceTwo = String(rollDice());
+  console.log(diceOne + diceTwo);
+  console.log(gameMode);
+  outputMessage = `🎲 ${currentPlayer}: 🎲
+  <br>You rolled ${diceOne} for dice one and ${diceTwo} for dice two.
+  <br>Choose the order of the dice by entering "1" or "2".`;
+};
+
+var compare = function (playerOnePoints, playerTwoPoints) {
+  if (playerOnePoints > playerTwoPoints) {
+    outputMessage = `Player 1 has ${playerOnePoints} points. Player 1 is leading!`;
+  } else if (playerTwoPoints > playerOnePoints) {
+    outputMessage = `Player 2 has ${playerTwoPoints} points. Player 2 is leading!`;
+  } else if (playerOnePoints == playerTwoPoints) {
+    outputMessage = `It's a tie!`;
+  }
+};
+
+var main = function (input) {
+  if (gameMode == "start1") {
+    rollTwoDice();
+    gameMode = "order1";
+    return outputMessage;
+  }
+  if (gameMode == "order1") {
+    console.log(gameMode);
+    chooseOrder(input);
+    playerOnePoints = playerOnePoints + Number(finalNumber);
+    console.log(playerOnePoints);
+    gameMode = "start2";
+    return outputMessage;
+  }
+  if (gameMode == "start2") {
+    currentPlayer = "Player 2";
+    console.log(gameMode);
+    console.log(currentPlayer);
+    rollTwoDice();
+    gameMode = "order2";
+    return outputMessage;
+  }
+  if (gameMode == "order2") {
+    console.log(gameMode);
+    chooseOrder(input);
+    playerTwoPoints = playerTwoPoints + Number(finalNumber);
+    console.log(playerTwoPoints);
+    gameMode = "compare points";
+    return outputMessage;
+  }
+  if (gameMode == "compare points") {
+    console.log(gameMode);
+    compare(playerOnePoints, playerTwoPoints);
+    currentPlayer = "Player 1";
+    gameMode = "start1";
+    return outputMessage;
+  }
+};
