@@ -35,13 +35,13 @@ var makeDeck = function () {
     for (var rankCounter = 1; rankCounter <= 13; rankCounter += 1) {
       var cardName = rankCounter;
       if (cardName == 1) {
-        cardName = "ace";
+        cardName = "Ace";
       } else if (cardName == 11) {
-        cardName = "jack";
+        cardName = "Jack";
       } else if (cardName == 12) {
-        cardName = "queen";
+        cardName = "Queen";
       } else if (cardName == 13) {
-        cardName = "king";
+        cardName = "King";
       }
       var card = {
         name: cardName,
@@ -106,13 +106,13 @@ var addPoints = function (cardsArray) {
   for (var index = 0; index < cardsArray.length; index += 1) {
     if (
       //OR, create extra key that's called points.
-      cardsArray[index].name === "jack" ||
-      cardsArray[index].name === "queen" ||
-      cardsArray[index].name === "king"
+      cardsArray[index].name === "Jack" ||
+      cardsArray[index].name === "Queen" ||
+      cardsArray[index].name === "King"
     ) {
       cardsArray[index].rank = 10;
     }
-    if (cardsArray[index].name === "ace") {
+    if (cardsArray[index].name === "Ace") {
       cardsArray[index].rank = 11;
     }
   }
@@ -121,7 +121,7 @@ var addPoints = function (cardsArray) {
     points += Number(cardsArray[index].rank);
     if (points > 21) {
       for (index = 0; index < cardsArray.length; index += 1) {
-        if (cardsArray[index].name === "ace") {
+        if (cardsArray[index].name === "Ace") {
           cardsArray[index].rank = 1;
         }
       }
@@ -196,6 +196,7 @@ var main = function (input) {
   }
   if (gameMode == "compare") {
     comparePoints(playerPoints, dealerPoints);
+    gameMode = "start";
     return outputMessage;
   }
 };
